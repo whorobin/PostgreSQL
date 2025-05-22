@@ -1,0 +1,5 @@
+-- Active: 1747565100035@@127.0.0.1@5432@first_table
+
+SELECT * FROM person;
+
+ALTER TABLE person ADD COLUMN email VARCHAR(50) NOT NULL; 
