@@ -151,3 +151,63 @@ DROP Table orders;
 
     -- Find the total amount of orders placed each month in the year 2022.
     SELECT extract(month from order_date) as month, sum(total_amount)  from orders WHERE extract(year from order_date) = 2022 GROUP BY month;
+
+
+
+
+
+
+
+
+
+    ---- WH (step 2)
+
+    -- table create
+ CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10, 2)
+);
+
+-- Inserting sample data into the orders table
+INSERT INTO orders (customer_id, order_date, total_amount) VALUES 
+    (1, '2022-01-05', 100.50),
+    (2, '2022-01-07', 200.75),
+    (1, '2022-01-08', 150.25),
+    (3, '2022-01-10', 300.00),
+    (2, '2022-01-15', 180.50),
+    (3, '2022-01-20', 220.25),
+    (1, '2022-01-25', 90.00),
+    (2, '2022-01-28', 120.75),
+    (3, '2022-02-01', 250.50),
+    (1, '2022-02-05', 180.25),
+    (4, '2023-02-05', 190.25);
+
+-- Question
+
+-- 6: Find customers who have placed more than 2 orders and calculate the total amount spent by each of these customers.
+
+ -- answer 6 
+ -- (1: first a table ta check dibo, 2: jehutu coustomer koto gula oder korche mane ekta customer onk gula order korte paree tai amra customer k alada alada group korbo {group by use korle amra * use korte parbo na * er jaigay group by er pore jei colum er name lekhtechi sei name lekhbo}, 3: ekhon amra agreate function use kore dekhbo k koto gulo order korche, 4: jehutu question a bole diche J 2 tar beshi order khuje ber korar kotha tai amra HAVING user kore k koto gulo order korche khuje ber korte parbo, 5: every single customer koto taka kore spent korte tar calculate  )
+
+--  SELECT * FROM orders;
+-- SELECT customer_id FROM orders GROUP BY customer_id;
+-- SELECT customer_id, count(order_id) FROM orders GROUP BY customer_id;
+-- SELECT customer_id, count(order_id) FROM orders GROUP BY customer_id HAVING count(order_id) > 2;
+
+SELECT customer_id, count(order_id), sum(total_amount) as total_spent FROM orders GROUP BY customer_id HAVING count(order_id) > 2;
+
+
+--  7: Find the total amount of orders placed each month in the year 2022.
+-- Answer 7
+-- (1: first a table ta check dibo, 2: kon month/day/year a koto oder or puro year a koto oder asche er korte gele amder extract use korte hobe tai month gular ekta group korbo, 3: ekta year a jehutu onk gula month tar amra month gular group kore felbo, 4: every month er total order ber kora, 5. 2022 year a total koto takar order asche )
+
+-- SELECT * FROM orders;
+-- SELECT extract (MONTH FROM order_date) FROM orders;
+-- SELECT extract (MONTH FROM order_date) as month FROM orders GROUP BY month;
+-- SELECT extract (MONTH FROM order_date) as month, sum(total_amount) FROM orders GROUP BY month;
+SELECT extract (MONTH FROM order_date) as month, sum(total_amount) FROM orders WHERE extract (YEAR FROM order_date) = 2022 GROUP BY month;
+
+
+ 
